@@ -15,5 +15,5 @@ $(document).ready(function () {
         $results.find('.per20').text(stats.usSelf20);
         $results.find('.timeAvg').text(stats.usAvg);
         console.log();
-    }, 1000);
+    }, 5000);
 });
