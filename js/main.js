@@ -14,6 +14,7 @@ $(document).ready(function () {
         $results.find('.per5').text(stats.usSelf5);
         $results.find('.per20').text(stats.usSelf20);
         $results.find('.timeAvg').text(stats.usAvg);
+        $results.find('.devicePixelRatio').text(window.devicePixelRatio);
         console.log();
     }, 5000);
 });
