@@ -21,6 +21,3 @@ $(document).ready(function () {
     }, 5000);
 });
 
-window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
-    alert(errorMsg);
-};
