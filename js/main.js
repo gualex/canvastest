@@ -3,6 +3,9 @@
  */
 
 $(document).ready(function () {
+    $('#test-container').css('width', window.innerWidth);
+    $('#test-container').css('height', window.innerHeight);
+
     var runner = new TestRunner();
     runner.run();
     setTimeout(function () {
