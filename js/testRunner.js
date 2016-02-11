@@ -56,7 +56,7 @@ _.extend(TestRunner.prototype, {
     }
 });
 
-if (window.performance) {
+if (window.performance && window.performance.now) {
     TestRunner.getTime = function () {
         return window.performance.now();
     };

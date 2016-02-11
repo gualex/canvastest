@@ -16,8 +16,6 @@ $(document).ready(function () {
         $results.find('.timeAvg').text(stats.msAvg);
         $results.find('.fpsAvg').text(stats.fpsAvg);
         $results.find('.devicePixelRatio').text(window.devicePixelRatio);
-
-        console.log();
     }, 5000);
 });
 
