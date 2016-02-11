@@ -11,10 +11,12 @@ $(document).ready(function () {
         var $results = $('#test-results');
         $results.addClass('visible');
         var stats = runner.fpsCounter.getStats();
-        $results.find('.per5').text(stats.usSelf5);
-        $results.find('.per20').text(stats.usSelf20);
-        $results.find('.timeAvg').text(stats.usAvg);
+        $results.find('.per5').text(stats.msSelf5);
+        $results.find('.per20').text(stats.msSelf20);
+        $results.find('.timeAvg').text(stats.msAvg);
+        $results.find('.fpsAvg').text(stats.fpsAvg);
         $results.find('.devicePixelRatio').text(window.devicePixelRatio);
+
         console.log();
     }, 5000);
 });

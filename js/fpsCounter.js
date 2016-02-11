@@ -35,18 +35,19 @@ _.extend(fpsCounter.prototype, {
      * */
     getStats: function () {
         this.timesForFrame.sort(numericCompareDesc);
-        var usAvg = (this.endTestTime - this.beginTestTime) / this.timesForFrame.length;
+        var avgTime = (this.endTestTime - this.beginTestTime) / this.timesForFrame.length;
 
         var index5 = Math.min(this.timesForFrame.length - 1, Math.max(0, Math.round(this.timesForFrame.length / 5)));
         var index20 = Math.min(this.timesForFrame.length - 1, Math.max(0, Math.round(this.timesForFrame.length / 20)));
 
         var result = {
             // 5-персентиль собственного времени рисования (мкс)
-            usSelf5: Math.round(this.timesForFrame[index5] * 1000),
+            msSelf5: Math.round(this.timesForFrame[index5] * 10) / 10,
             // 20-персентиль собственного времени рисования (мкс)
-            usSelf20: Math.round(this.timesForFrame[index20] * 1000),
+            msSelf20: Math.round(this.timesForFrame[index20] * 10) / 10,
             // среднее полное время рисования кадра (мкс)
-            usAvg: Math.round(usAvg * 1000)
+            msAvg: Math.round(avgTime * 10) / 10,
+            fpsAvg: Math.round(10000.0 / avgTime) / 10
         };
 
         return result;
