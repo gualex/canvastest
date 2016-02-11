@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+}
+
+#test-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.invisible {
+    display: none;
+}
+
+.No1Test canvas {
+    position: absolute;
+}
+
+#test-results {
+    display: none;
+}
+
+#test-results.visible {
+    display: block;
+    z-index: 1;
+    width: 300px;
+    height: 200px;
+    background-color: lavender;
+    position: absolute;
+    left: 50px;
+    top:50px;
+}
+
+.per5, .per20, .timeAvg {
+    font-weight: bold;
+}
