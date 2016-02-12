@@ -10,7 +10,7 @@ _.extend(fpsCounter.prototype, {
     reset: function () {
         // чистое время рисования одного кадра в нашем коде
         this.timesForFrame = [];
-        this.beginTestTime = TestRunner.getTime();
+        this.beginTestTime = getTime();
     },
 
     /**
@@ -18,16 +18,16 @@ _.extend(fpsCounter.prototype, {
      * время от начала рисования прошлого кадра
      * */
     drawFrame: function (drawFunction) {
-        var beginFrameTime = TestRunner.getTime();
+        var beginFrameTime = getTime();
         drawFunction();
-        var endFrameTime = TestRunner.getTime();
+        var endFrameTime = getTime();
 
         var frameLength = endFrameTime - beginFrameTime;
         this.timesForFrame.push(frameLength);
     },
 
     stop: function () {
-        this.endTestTime = TestRunner.getTime();
+        this.endTestTime = getTime();
     },
 
     /**

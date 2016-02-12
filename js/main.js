@@ -14,11 +14,12 @@ $(document).ready(function () {
         var $results = $('#test-results');
         $results.addClass('visible');
         var stats = runner.fpsCounter.getStats();
+        $results.find('.name').text(runner.test.params.testName);
         $results.find('.per5').text(stats.msSelf5);
         $results.find('.per20').text(stats.msSelf20);
         $results.find('.timeAvg').text(stats.msAvg);
         $results.find('.fpsAvg').text(stats.fpsAvg);
         $results.find('.devicePixelRatio').text(window.devicePixelRatio);
-    }, 10000);
+    }, Config.baseTestTime);
 });
 

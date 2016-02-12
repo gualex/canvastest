@@ -2,11 +2,12 @@
  * Created by gualex on 11.02.16.
  */
 
-
 var TestSingleCanvasBase = function () {};
 TestSingleCanvasBase.prototype = new TestCase();
 _.extend(TestSingleCanvasBase.prototype, {
     prepare: function () {
+        TestCase.prototype.prepare.call(this);
+
         var template = '<canvas/>';
         this.$canvas = $(template);
         this.$canvas.attr('width', this.$container.width());
@@ -26,8 +27,8 @@ Test1.prototype = new TestSingleCanvasBase();
 _.extend(Test1.prototype, {
     prepare: function () {
         TestSingleCanvasBase.prototype.prepare.call(this);
-        this.$container.addClass('Test1');
-        this.applyDevicePixelRatio(this.$canvas);
+        this.params.testName = 'Test1';
+        this.params.description = 'Одна канва на весь экран. Закрашивается случайным цветом. Без применения DevicePixelRatio.';
     },
 
     drawFrame: function () {
@@ -39,3 +40,13 @@ _.extend(Test1.prototype, {
     }
 });
 
+var Test2 = function () {};
+Test2.prototype = new Test1();
+_.extend(Test2.prototype, {
+    prepare: function () {
+        Test1.prototype.prepare.call(this);
+        this.params.testName = 'Test2';
+        this.params.description = 'Одна канва на весь экран. Закрашивается случайным цветом. С применением DevicePixelRatio.';
+        this.applyDevicePixelRatio(this.$canvas);
+    }
+});

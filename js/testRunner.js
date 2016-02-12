@@ -2,25 +2,26 @@
  * Created by gualex on 11.02.16.
  */
 
-(function () {
-    window.requestAnimationFrame =
-        window.requestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.msRequestAnimationFrame ||
-        function (callback) {
-            window.setTimeout(callback, 1000 / 60);
-        };
-})();
-
 var TestRunner = function () {
     this.fpsCounter = new fpsCounter();
 
     this.isRunning = false;
 
-    this.test = new Test1();
-    this.test.init();
+    var testId = parseInt(getParameterByName('test'));
+    if (!_.isFinite(testId)) {
+        testId = 1;
+    }
+    var testName = 'Test' + testId;
+    var testClass = window[testName];
+    if (typeof  testClass !== 'function') {
+        alert('Wrong test');
+        return;
+    }
+
+    this.test = new testClass();
     this.test.prepare();
+    this.test.afterPrepare();
+
 };
 
 _.extend(TestRunner.prototype, {
@@ -58,10 +59,3 @@ _.extend(TestRunner.prototype, {
     }
 });
 
-if (window.performance && window.performance.now) {
-    TestRunner.getTime = function () {
-        return window.performance.now();
-    };
-} else {
-    TestRunner.getTime = _.now;
-}

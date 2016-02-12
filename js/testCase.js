@@ -5,15 +5,18 @@
 function TestCase() {
 }
 
-TestCase.prototype.init = function () {
-    this.$container = $('#test-container');
+TestCase.prototype.afterPrepare = function () {
+    this.$container.addClass(this.params.testName);
 };
 
 /**
  * Создаем DOM и др. приготовления
  * */
 TestCase.prototype.prepare = function () {
-
+    this.$container = $('#test-container');
+    this.params = {
+        testName: 'unknown'
+    };
 };
 
 /**
