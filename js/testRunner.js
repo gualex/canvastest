@@ -8,7 +8,7 @@
         window.mozRequestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
         window.msRequestAnimationFrame ||
-        function( callback ){
+        function (callback) {
             window.setTimeout(callback, 1000 / 60);
         };
 })();
