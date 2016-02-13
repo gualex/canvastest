@@ -57,6 +57,7 @@ _.extend(Test2.prototype, {
 var Test3 = function () {
     this.canvasCount = 2;
     this.canvasList = [];
+    this.useDevicePixelRatio = true;
 };
 Test3.prototype = new TestCase();
 
@@ -75,7 +76,9 @@ _.extend(Test3.prototype, {
             $canvas.attr('width', this.$container.width());
             $canvas.attr('height', this.$container.height());
 
-            this.applyDevicePixelRatio($canvas);
+            if (this.useDevicePixelRatio) {
+                this.applyDevicePixelRatio($canvas);
+            }
 
             this.canvasList.push($canvas);
             this.$container.append($canvas);
@@ -94,5 +97,17 @@ _.extend(Test3.prototype, {
         var shiftX = Math.round(Math.random() * 10);
         var shiftY = Math.round(Math.random() * 10);
         context.fillRect(shiftX, shiftY, canvas.width - 10, canvas.height - 10);
+    }
+});
+
+var Test4 = function () {
+    this.useDevicePixelRatio = false;
+};
+Test4.prototype = new Test3();
+_.extend(Test4.prototype, {
+    prepare: function () {
+        Test3.prototype.prepare.call(this);
+        this.params.testName = 'Test4';
+        this.params.description = 'Две канвы на весь экран. Закрашивается случайным цветом одна канва за кадр. Без применения DevicePixelRatio.';
     }
 });

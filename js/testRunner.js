@@ -45,6 +45,18 @@ _.extend(TestRunner.prototype, {
 
     draw: function () {
         this.test.drawFrame();
+    },
+
+    printResult: function () {
+        var $results = $('#test-results');
+        $results.addClass('visible');
+        var stats = this.fpsCounter.getStats();
+        $results.find('.name').text(this.test.params.testName);
+        $results.find('.per5').text(stats.msSelf5);
+        $results.find('.per20').text(stats.msSelf20);
+        $results.find('.timeAvg').text(stats.msAvg);
+        $results.find('.fpsAvg').text(stats.fpsAvg);
+        $results.find('.devicePixelRatio').text(window.devicePixelRatio);
     }
 });
 
