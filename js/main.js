@@ -35,6 +35,10 @@ $(document).ready(function () {
             test.singleDraw = true;
         }
 
+        if (test.canvasCount !== undefined && _.isFinite(getParameterByName('canvasCount'))) {
+            test.canvasCount = parseInt(getParameterByName('canvasCount'));
+        }
+
         return test;
     }
 });
