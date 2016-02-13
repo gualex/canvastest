@@ -3,25 +3,35 @@
  */
 
 $(document).ready(function () {
-    $('#test-container')
+    var $container = $('#test-container')
         .css('width', window.innerWidth)
         .css('height', window.innerHeight);
 
     var runner = new TestRunner();
-    runner.selectTest(getTest());
+    var test = getTest();
+    if (test.cnvStore) {
+        preloader.useCanvasStore = true;
+    }
+    preloader.preloadImage(test.images, beginTest);
 
-    setTimeout(function () {
-        runner.run();
-    }, 300);
-
-    setTimeout(function () {
-        runner.fpsCounter.reset();
+    function beginTest() {
+        test.prepare();
+        test.afterPrepare();
+        runner.selectTest(test);
 
         setTimeout(function () {
-            runner.stop();
-            runner.printResult();
-        }, Config.baseTestTime);
-    }, 2000);
+            runner.run();
+        }, 300);
+
+        setTimeout(function () {
+            runner.fpsCounter.reset();
+
+            setTimeout(function () {
+                runner.stop();
+                runner.printResult();
+            }, Config.baseTestTime);
+        }, 2000);
+    }
 
     function getTest() {
         var testId = parseInt(getParameterByName('test'));
@@ -44,6 +54,10 @@ $(document).ready(function () {
 
         if (test.canvasCount !== undefined && _.isFinite(getParameterByName('canvasCount'))) {
             test.canvasCount = parseInt(getParameterByName('canvasCount'));
+        }
+
+        if (test.useCanvasStore !== undefined && getParameterByName('cnvStore') == 1) {
+            test.useCanvasStore = true;
         }
 
         return test;

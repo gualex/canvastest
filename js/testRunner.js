@@ -10,8 +10,6 @@ var TestRunner = function () {
 _.extend(TestRunner.prototype, {
     selectTest: function (test) {
         this.test = test;
-        this.test.prepare();
-        this.test.afterPrepare();
     },
 
     run: function () {

@@ -12,11 +12,12 @@ CanvasBaseTest.prototype = new TestCase();
 
 _.extend(CanvasBaseTest.prototype, {
     drawFrame: function () {
-        if (this.singleDraw) {
+        if (this.singleDraw && this.prepared) {
             this.targetCanvasIndex = ((this.targetCanvasIndex + 1) || 0) % this.canvasList.length;
             this.drawCanvasItem(this.targetCanvasIndex);
 
         } else {
+            this.prepared = true;
             for (var i = 0; i < this.canvasList.length; i++) {
                 this.drawCanvasItem(i);
             }

@@ -34,7 +34,7 @@ _.extend(fpsCounter.prototype, {
      * Вычисляем 5 и 20 персентиль для измеренных данных.
      * */
     getStats: function () {
-        this.timesForFrame.sort(numericCompareDesc);
+        this.timesForFrame.sort(numericCompare);
         var avgTime = (this.endTestTime - this.beginTestTime) / this.timesForFrame.length;
 
         var index5 = Math.min(this.timesForFrame.length - 1, Math.max(0, Math.round(this.timesForFrame.length / 5)));

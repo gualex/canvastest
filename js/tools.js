@@ -2,6 +2,10 @@ window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
     alert(errorMsg);
 };
 
+function numericCompare(a, b) {
+    return a - b;
+}
+
 function numericCompareDesc(a, b) {
     return b - a;
 }

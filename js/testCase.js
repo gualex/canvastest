@@ -4,6 +4,11 @@
 
 function TestCase() {
     this.useDevicePixelRatio = false;
+    this.images = {};
+    //this.images = {
+    //    'img/cellStoneY.png': null,
+    //    'img/cellStoneB.png': null
+    //};
 }
 
 TestCase.prototype.afterPrepare = function () {
@@ -77,3 +82,48 @@ TestCase.prototype.getCanvasListDescription = function (canvasList) {
 
     return Math.round(cssSize / 1000) + 'K, ' + Math.round(physicalSize / 1000) + 'K';
 };
+
+var Preloader = function () {
+    this.useCanvasStore = false;
+};
+
+_.extend(Preloader.prototype, {
+    preloadImage: function (imageDictionary, afterPreloadCallback) {
+        var keys = _.keys(imageDictionary);
+
+        if (keys.length === 0) {
+            afterPreloadCallback();
+            return;
+        }
+
+        var finishFunc = _.after(keys.length, afterPreloadCallback);
+        var self = this;
+        _.each(keys, function (url) {
+            var $img = $('<img>');
+            $img
+                .load(function () {
+                    if (self.useCanvasStore) {
+                        imageDictionary[url] = getCanvasForImage($img.get(0));
+                    } else {
+                        imageDictionary[url] = $img.get(0);
+                    }
+                    finishFunc();
+                })
+                .error(function () {
+                    throw new Error('Can\'t load image' + url);
+                })
+                .attr('src', url);
+        });
+
+        function getCanvasForImage(img) {
+            var canvas = document.createElement('canvas');
+            canvas.setAttribute('width', img.width);
+            canvas.setAttribute('height', img.height);
+            var context = canvas.getContext('2d');
+            context.drawImage(img, 0, 0);
+            return canvas;
+        }
+    }
+});
+
+var preloader = new Preloader();

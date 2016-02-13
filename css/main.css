@@ -25,7 +25,7 @@ body {
 
 #test-results.visible {
     display: block;
-    z-index: 10;
+    z-index: 1000;
     width: 300px;
     height: 200px;
     background-color: lavender;
@@ -36,4 +36,8 @@ body {
 
 #test-results span {
     font-weight: bold;
+}
+
+.bigHeight {
+    height: 3000px;
 }

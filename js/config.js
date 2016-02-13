@@ -3,5 +3,5 @@
  */
 
 var Config = {
-    baseTestTime: 3000
+    baseTestTime: 5000
 };
