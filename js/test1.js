@@ -11,8 +11,7 @@ _.extend(TestSingleCanvasBase.prototype, {
 
         var template = '<canvas/>';
         this.$canvas = $(template);
-        this.$canvas.attr('width', this.$container.width());
-        this.$canvas.attr('height', this.$container.height());
+        this.setCanvas(this.$canvas, this.$container.width(), this.$container.height(), this.useDevicePixelRatio);
         this.canvas = this.$canvas[0];
         this.context = this.canvas.getContext('2d');
         this.$container.append(this.$canvas);
@@ -23,9 +22,9 @@ _.extend(TestSingleCanvasBase.prototype, {
  * Один canvas на весь экран, закрашивается одним цветом
  * */
 var Test1 = function () {
+    this.useDevicePixelRatio = false;
 };
 Test1.prototype = new TestSingleCanvasBase();
-
 _.extend(Test1.prototype, {
     prepare: function () {
         TestSingleCanvasBase.prototype.prepare.call(this);
@@ -43,6 +42,7 @@ _.extend(Test1.prototype, {
 });
 
 var Test2 = function () {
+    this.useDevicePixelRatio = true;
 };
 Test2.prototype = new Test1();
 _.extend(Test2.prototype, {
@@ -50,14 +50,12 @@ _.extend(Test2.prototype, {
         Test1.prototype.prepare.call(this);
         this.params.testName = 'Test2';
         this.params.description = 'Одна канва на весь экран. Закрашивается случайным цветом. С применением DevicePixelRatio.';
-        this.applyDevicePixelRatio(this.$canvas);
     }
 });
 
 var Test3 = function () {
     this.canvasCount = 2;
     this.canvasList = [];
-    this.useDevicePixelRatio = true;
 };
 Test3.prototype = new TestCase();
 
@@ -67,19 +65,15 @@ _.extend(Test3.prototype, {
         this.params.testName = 'Test3';
         this.params.description = 'Две канвы на весь экран. Закрашивается случайным цветом одна канва за кадр. С применением DevicePixelRatio.';
 
-
         var template = '<canvas/>';
 
         for (var i = 0; i < this.canvasCount; i++) {
             var $canvas = $(template);
             $canvas.addClass('canv' + (i + 1));
-            $canvas.attr('width', this.$container.width());
-            $canvas.attr('height', this.$container.height());
+            $canvas.addClass('stretch');
+            $canvas.css('z-index', (i + 1));
 
-            if (this.useDevicePixelRatio) {
-                this.applyDevicePixelRatio($canvas);
-            }
-
+            this.setCanvas($canvas, this.$container.width(), this.$container.height(), this.useDevicePixelRatio);
             this.canvasList.push($canvas);
             this.$container.append($canvas);
         }

@@ -6,12 +6,14 @@ body {
 
 }
 
-.invisible {
-    display: none;
+#test-container canvas.stretch {
+    position: absolute;
+    left: 0px;
+    right: 0px;
 }
 
-.No1Test canvas {
-    position: absolute;
+.invisible {
+    display: none;
 }
 
 #test-results {
@@ -20,13 +22,13 @@ body {
 
 #test-results.visible {
     display: block;
-    z-index: 1;
+    z-index: 10;
     width: 300px;
     height: 200px;
     background-color: lavender;
     position: absolute;
     left: 50px;
-    top:50px;
+    top: 50px;
 }
 
 #test-results span {

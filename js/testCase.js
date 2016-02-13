@@ -3,7 +3,7 @@
  */
 
 function TestCase() {
-
+    this.useDevicePixelRatio = true;
 }
 
 TestCase.prototype.afterPrepare = function () {
@@ -46,4 +46,17 @@ TestCase.prototype.applyDevicePixelRatio = function ($canvas) {
         $canvas.css('width', hidefCanvasCssWidth);
         $canvas.css('height', hidefCanvasCssHeight);
     }
+};
+
+TestCase.prototype.setCanvas = function ($canvas, width, height, useDPR) {
+    if (window.devicePixelRatio && useDPR) {
+        $canvas.attr('width', width * window.devicePixelRatio);
+        $canvas.attr('height', height * window.devicePixelRatio);
+    } else {
+        $canvas.attr('width', width);
+        $canvas.attr('height', height);
+    }
+
+    $canvas.css('width', width);
+    $canvas.css('height', height);
 };
