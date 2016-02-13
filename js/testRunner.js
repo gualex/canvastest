@@ -50,8 +50,11 @@ _.extend(TestRunner.prototype, {
     printResult: function () {
         var $results = $('#test-results');
         $results.addClass('visible');
-        var stats = this.fpsCounter.getStats();
         $results.find('.name').text(this.test.params.testName);
+        $results.find('.tags').text(this.test.params.tags);
+        $results.find('.canvasDesc').text(this.test.params.canvasDesc);
+
+        var stats = this.fpsCounter.getStats();
         $results.find('.per5').text(stats.msSelf5);
         $results.find('.per20').text(stats.msSelf20);
         $results.find('.timeAvg').text(stats.msAvg);

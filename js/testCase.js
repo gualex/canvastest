@@ -16,7 +16,8 @@ TestCase.prototype.afterPrepare = function () {
 TestCase.prototype.prepare = function () {
     this.$container = $('#test-container');
     this.params = {
-        testName: 'unknown'
+        testName: 'unknown',
+        tags: ''
     };
 };
 
@@ -59,4 +60,20 @@ TestCase.prototype.setCanvas = function ($canvas, width, height, useDPR) {
 
     $canvas.css('width', width);
     $canvas.css('height', height);
+};
+
+/**
+ * Определение площади канвы в логических и физических пикселях
+ * canvasList - массив jquery $canvas
+ * */
+TestCase.prototype.getCanvasListDescription = function (canvasList) {
+    var cssSize = 0;
+    var physicalSize = 0;
+
+    _.each(canvasList, function ($canvas) {
+        cssSize += parseInt($canvas.css('width')) * parseInt($canvas.css('height'));
+        physicalSize += $canvas.attr('width') * $canvas.attr('height');
+    });
+
+    return Math.round(cssSize / 1000) + 'K, ' + Math.round(physicalSize / 1000) + 'K';
 };

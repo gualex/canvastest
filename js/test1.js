@@ -2,22 +2,6 @@
  * Created by gualex on 11.02.16.
  */
 
-var TestSingleCanvasBase = function () {
-};
-TestSingleCanvasBase.prototype = new TestCase();
-_.extend(TestSingleCanvasBase.prototype, {
-    prepare: function () {
-        TestCase.prototype.prepare.call(this);
-
-        var template = '<canvas/>';
-        this.$canvas = $(template);
-        this.setCanvas(this.$canvas, this.$container.width(), this.$container.height(), this.useDevicePixelRatio);
-        this.canvas = this.$canvas[0];
-        this.context = this.canvas.getContext('2d');
-        this.$container.append(this.$canvas);
-    }
-});
-
 /**
  * Один canvas на весь экран, закрашивается одним цветом
  * */
@@ -30,6 +14,7 @@ _.extend(Test1.prototype, {
         TestSingleCanvasBase.prototype.prepare.call(this);
         this.params.testName = 'Test1';
         this.params.description = 'Одна канва на весь экран. Закрашивается случайным цветом. Без применения DevicePixelRatio.';
+        this.params.tags = 'full1cnv colorfill';
     },
 
     drawFrame: function () {
@@ -50,6 +35,7 @@ _.extend(Test2.prototype, {
         Test1.prototype.prepare.call(this);
         this.params.testName = 'Test2';
         this.params.description = 'Одна канва на весь экран. Закрашивается случайным цветом. С применением DevicePixelRatio.';
+        this.params.tags = 'full1cnv colorfill dpr';
     }
 });
 
@@ -64,6 +50,7 @@ _.extend(Test3.prototype, {
         TestCase.prototype.prepare.call(this);
         this.params.testName = 'Test3';
         this.params.description = 'Две канвы на весь экран. Закрашивается случайным цветом одна канва за кадр. С применением DevicePixelRatio.';
+        this.params.tags = 'full' + this.canvasCount + 'cnv colorfill dpr';
 
         var template = '<canvas/>';
 
@@ -77,6 +64,8 @@ _.extend(Test3.prototype, {
             this.canvasList.push($canvas);
             this.$container.append($canvas);
         }
+
+        this.params.canvasDesc = this.getCanvasListDescription(this.canvasList);
     },
 
     drawFrame: function () {
@@ -103,5 +92,6 @@ _.extend(Test4.prototype, {
         Test3.prototype.prepare.call(this);
         this.params.testName = 'Test4';
         this.params.description = 'Две канвы на весь экран. Закрашивается случайным цветом одна канва за кадр. Без применения DevicePixelRatio.';
+        this.params.tags = 'full' + this.canvasCount + 'cnv colorfill';
     }
 });
