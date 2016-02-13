@@ -95,3 +95,73 @@ _.extend(Test4.prototype, {
         this.params.tags = 'full' + this.canvasCount + 'cnv colorfill';
     }
 });
+
+/**
+ * Экран заполняется плитками из canvas в один слой, на каждом кадре каждая плитка перерисовывается
+ * */
+var Test7 = function () {
+    this.canvasList = [];
+    this.useDevicePixelRatio = true;
+};
+
+Test7.prototype = new TestCase();
+
+_.extend(Test7.prototype, {
+    prepare: function () {
+        TestCase.prototype.prepare.call(this);
+
+        var template = '<canvas/>';
+        var TILES = 10;
+        var contHeight = this.$container.height();
+        var contWidth = this.$container.width();
+        var tileHeight = Math.round(contHeight / TILES);
+        var tileWidth = Math.round(contWidth / TILES);
+
+        for (var y = 0; y < TILES; y++) {
+            for (var x = 0; x < TILES; x++) {
+                var $canvas = $(template);
+                this.setCanvas($canvas, tileWidth, tileHeight, this.useDevicePixelRatio);
+                $canvas.css({
+                    left: x * tileWidth,
+                    top: y * tileHeight
+                });
+                this.canvasList.push({
+                    $canvas: $canvas,
+                    canvas: $canvas[0],
+                    context:$canvas[0].getContext('2d')
+                });
+                this.$container.append($canvas);
+            }
+        }
+
+        this.params.testName = 'Test7';
+        this.params.description = 'Плитки canvas в один слой. Все плитки перекрашиваются за кадр. С применением DevicePixelRatio.';
+        this.params.tags = 'tile' + this.canvasList.length + 'cnv colorfill dpr';
+        this.params.canvasDesc = this.getCanvasListDescription(_.pluck(this.canvasList, '$canvas'));
+    },
+
+    drawFrame: function () {
+        for (var i = 0; i < this.canvasList.length; i++) {
+            var item = this.canvasList[i];
+            var canvas = item.canvas;
+            var context = item.context;
+
+            this.clearCanvas(canvas);
+            context.fillStyle = getRandomColor();
+            context.fillRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+});
+
+var Test8 = function () {
+    this.useDevicePixelRatio = false;
+};
+Test8.prototype = new Test7();
+_.extend(Test8.prototype, {
+    prepare: function () {
+        Test7.prototype.prepare.call(this);
+        this.params.testName = 'Test8';
+        this.params.description = 'Плитки canvas в один слой. Все плитки перекрашиваются за кадр. Без применения DevicePixelRatio.';
+        this.params.tags = 'tile' + this.canvasList.length + 'cnv colorfill';
+    }
+});

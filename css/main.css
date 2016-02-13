@@ -6,8 +6,11 @@ body {
 
 }
 
-#test-container canvas.stretch {
+#test-container canvas {
     position: absolute;
+}
+
+#test-container canvas.stretch {
     left: 0px;
     right: 0px;
 }
