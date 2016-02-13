@@ -21,7 +21,7 @@ $(document).ready(function () {
             runner.stop();
             runner.printResult();
         }, Config.baseTestTime);
-    }, 600);
+    }, 2000);
 
     function getTest() {
         var testId = parseInt(getParameterByName('test'));
