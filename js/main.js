@@ -9,12 +9,19 @@ $(document).ready(function () {
 
     var runner = new TestRunner();
     runner.selectTest(getTest());
-    runner.run();
 
     setTimeout(function () {
-        runner.stop();
-        runner.printResult();
-    }, Config.baseTestTime);
+        runner.run();
+    }, 300);
+
+    setTimeout(function () {
+        runner.fpsCounter.reset();
+
+        setTimeout(function () {
+            runner.stop();
+            runner.printResult();
+        }, Config.baseTestTime);
+    }, 600);
 
     function getTest() {
         var testId = parseInt(getParameterByName('test'));
