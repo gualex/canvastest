@@ -91,6 +91,8 @@ _.extend(Test2.prototype, {
 var Test3 = function () {
     this.canvasList = [];
     this.useCanvasStore = false;
+    this.useScale = false;
+    this.useRotate = false;
     this.images['img/cellStoneY.png'] = null;
     this.images['img/cellStoneB.png'] = null;
 };
@@ -144,11 +146,26 @@ _.extend(Test3.prototype, {
         var part = (timeFromStart % animationLength) / animationLength;
         var frame = Math.floor(part * 13);
 
+        var angle = Math.PI * 2 * ((timeFromStart % 5000) / 5000);
+        var scale = 0.95 + ((timeFromStart % 1000) / 10000);
+
         for (var y = 0; y + img.height <= canvas.height; y += 90) {
             for (var x = 0; x + 90 <= canvas.width; x += 90) {
-                context.drawImage(img, (frame + x * 3 + y * 7) % 13 * 90, 0, 90, 90, x, y, 90, 90);
+                var frameIndex = (frame + x * 3 + y * 7) % 13;
+                context.setTransform(1, 0, 0, 1, 0, 0);
+                if (this.useScale || this.useRotate) {
+                    context.translate(x + 90 / 2, y + 90 / 2);
+                    if (this.useScale) {
+                        context.scale(scale, scale);
+                    }
+                    if (this.useRotate) {
+                        context.rotate(angle + (x * 3 + y * 7)/5000);
+                    }
+                    context.drawImage(img, frameIndex * 90, 0, 90, 90, -90 / 2, -90 / 2, 90, 90);
+                } else {
+                    context.drawImage(img, frameIndex * 90, 0, 90, 90, x, y, 90, 90);
+                }
             }
         }
-    },
-
+    }
 });

@@ -60,6 +60,14 @@ $(document).ready(function () {
             test.useCanvasStore = true;
         }
 
+        if (test.useScale !== undefined && getParameterByName('scale') == 1) {
+            test.useScale = true;
+        }
+
+        if (test.useRotate !== undefined && getParameterByName('rotate') == 1) {
+            test.useRotate = true;
+        }
+
         return test;
     }
 });
