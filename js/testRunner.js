@@ -13,7 +13,7 @@ var TestRunner = function () {
     }
     var testName = 'Test' + testId;
     var testClass = window[testName];
-    if (typeof  testClass !== 'function') {
+    if (typeof testClass !== 'function') {
         alert('Wrong test');
         return;
     }

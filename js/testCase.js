@@ -3,6 +3,7 @@
  */
 
 function TestCase() {
+
 }
 
 TestCase.prototype.afterPrepare = function () {
