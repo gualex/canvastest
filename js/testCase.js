@@ -3,7 +3,7 @@
  */
 
 function TestCase() {
-    this.useDevicePixelRatio = true;
+    this.useDevicePixelRatio = false;
 }
 
 TestCase.prototype.afterPrepare = function () {

@@ -26,7 +26,16 @@ $(document).ready(function () {
         if (typeof testClass !== 'function') {
             throw new Error('Wrong test');
         }
-        return new testClass();
+        var test = new testClass();
+        if (getParameterByName('dpr') == 1) {
+            test.useDevicePixelRatio = true;
+        }
+
+        if (test.singleDraw !== undefined && getParameterByName('singleDraw') == 1) {
+            test.singleDraw = true;
+        }
+
+        return test;
     }
 });
 
