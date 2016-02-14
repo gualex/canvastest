@@ -34,11 +34,11 @@ _.extend(fpsCounter.prototype, {
      * Вычисляем 5 и 20 персентиль для измеренных данных.
      * */
     getStats: function () {
-        this.timesForFrame.sort(numericCompare);
+        this.timesForFrame.sort(numericCompareDesc);
         var avgTime = (this.endTestTime - this.beginTestTime) / this.timesForFrame.length;
 
-        var index5 = Math.min(this.timesForFrame.length - 1, Math.max(0, Math.round(this.timesForFrame.length / 5)));
-        var index20 = Math.min(this.timesForFrame.length - 1, Math.max(0, Math.round(this.timesForFrame.length / 20)));
+        var index5 = Math.min(this.timesForFrame.length - 1, Math.max(0, Math.round(this.timesForFrame.length * 0.05)));
+        var index20 = Math.min(this.timesForFrame.length - 1, Math.max(0, Math.round(this.timesForFrame.length * 0.20)));
 
         var result = {
             // 5-персентиль собственного времени рисования (мкс)
