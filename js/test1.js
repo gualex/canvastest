@@ -169,12 +169,8 @@ _.extend(Test3.prototype, {
         var angle = Math.PI * 2 * ((timeFromStart % 5000) / 5000);
         var scale = 0.95 + ((timeFromStart % 1000) / 10000);
 
-
         var columnCount = Math.ceil(canvas.width / spriteWidth);
         var rowCount = Math.ceil(canvas.height / spriteHeight);
-
-        //var img = this.images['img/cellStoneY.png'];
-
 
         for (var i = 0; i < rowCount; i++) {
             for (var j = 0; j < columnCount; j++) {
@@ -183,37 +179,29 @@ _.extend(Test3.prototype, {
 
                 var frameIndex = (frame + i * 3 + j * 7) % spriteFrames;
 
+                var img;
                 if (this.fakeTextures === 0) {
-                    var img = this.images['img/cellStoneY.png'];
+                    img = this.images['img/cellStoneY.png'];
                 } else {
-                    var img = this.images['img/cellStoneY.png_' + ((i * spriteHeight + j) % this.fakeTextures)];
+                    img = this.images['img/cellStoneY.png_' + ((i * columnCount + j) % this.fakeTextures)];
                 }
 
-                //if ((i * 13 + j * 17 + frame) % 7  === 0) {
-                this.drawSprite(context, img, frameIndex, spriteFrames, x, y);
-                //}
+                if (this.useScale || this.useRotate) {
+                    context.setTransform(1, 0, 0, 1, 0, 0);
+                    context.translate(x + spriteWidth / 2, y + spriteHeight / 2);
+                    if (this.useScale) {
+                        context.scale(scale, scale);
+                    }
+                    if (this.useRotate) {
+                        context.rotate(angle + (x * 3 + y * 7) / 5000);
+                    }
+                    this.drawSprite(context, img, frameIndex, 13, -spriteWidth / 2, -spriteHeight / 2);
+                    context.setTransform(1, 0, 0, 1, 0, 0);
+                } else {
+                    this.drawSprite(context, img, frameIndex, spriteFrames, x, y);
+                }
             }
         }
-
-        //for (var y = 0; y + img.height <= canvas.height; y += 90) {
-        //    for (var x = 0; x + 90 <= canvas.width; x += 90) {
-        //        var frameIndex = (frame + x * 3 + y * 7) % 13;
-        //        if (this.useScale || this.useRotate) {
-        //            context.setTransform(1, 0, 0, 1, 0, 0);
-        //            context.translate(x + 90 / 2, y + 90 / 2);
-        //            if (this.useScale) {
-        //                context.scale(scale, scale);
-        //            }
-        //            if (this.useRotate) {
-        //                context.rotate(angle + (x * 3 + y * 7) / 5000);
-        //            }
-        //            this.drawSprite(context, img, frameIndex, 13, -90 / 2, -90 / 2);
-        //            context.setTransform(1, 0, 0, 1, 0, 0);
-        //        } else {
-        //            this.drawSprite(context, img, frameIndex, 13, x, y);
-        //        }
-        //    }
-        //}
     },
 
     drawSprite: function (context, img, frameIndex, totalFrames, x, y) {
