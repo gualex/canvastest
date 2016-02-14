@@ -9,9 +9,9 @@ $(document).ready(function () {
 
     var runner = new TestRunner();
     var test = getTest();
-    if (test.cnvStore) {
-        preloader.useCanvasStore = true;
-    }
+
+    preloader.imageSource = test.imageSource > 0 ? test.imageSource : 0;
+    preloader.fakeTextures = test.fakeTextures > 0 ? test.fakeTextures : 0;
     preloader.preloadImage(test.images, beginTest);
 
     function beginTest() {
@@ -56,8 +56,8 @@ $(document).ready(function () {
             test.canvasCount = parseInt(getParameterByName('canvasCount'));
         }
 
-        if (test.useCanvasStore !== undefined && getParameterByName('cnvStore') == 1) {
-            test.useCanvasStore = true;
+        if (test.imageSource !== undefined && (getParameterByName('imageSource') == 1 || getParameterByName('imageSource') == 2)) {
+            test.imageSource = parseInt(getParameterByName('imageSource'));
         }
 
         if (test.useScale !== undefined && getParameterByName('scale') == 1) {
@@ -66,6 +66,14 @@ $(document).ready(function () {
 
         if (test.useRotate !== undefined && getParameterByName('rotate') == 1) {
             test.useRotate = true;
+        }
+
+        if (test.smallStretch !== undefined && getParameterByName('stretch') == 1) {
+            test.smallStretch = true;
+        }
+
+        if (test.fakeTextures !== undefined && (test.imageSource === 1 || test.imageSource === 2 ) && _.isFinite(getParameterByName('textures'))) {
+            test.fakeTextures = parseInt(getParameterByName('textures'));
         }
 
         return test;
